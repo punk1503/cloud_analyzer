@@ -5,11 +5,9 @@ from PIL import Image
 PERFECT_WHITE = (255, 255, 255)
 PERFECT_BLUE = (1, 83, 219)
 
-
-def main():
-    f = input('image:')
-    image = Image.open(f)
-    pixels = image.load() # this is not a list, nor is it list()'able
+def get_cloud_percent(image_path):
+    image = Image.open(image_path)
+    pixels = image.load()
     width, height = image.size
 
     all_pixels = []
@@ -26,7 +24,13 @@ def main():
             blues_counter += 1
         else: 
             whites_counter += 1
-    print(f'Clouds: {round(whites_counter*100/(blues_counter+whites_counter), 2)}%')
+    
+    return whites_counter*100/(blues_counter+whites_counter)
+
+def main():
+    f = input('image:')
+    cloud_percent = get_cloud_percent(f)
+    print(f'Clouds: {round(cloud_percent, 2)}%')
 
 if __name__ == '__main__':
     main()
